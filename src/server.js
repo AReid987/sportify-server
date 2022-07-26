@@ -21,11 +21,24 @@
 
 require('dotenv').config()
 const SportsAPI = require('./sports')
+const prisma = require('../prisma.js')
 
-const asyncApiCall = async () => {
+const asyncFetchSports = async () => {
   const response = await SportsAPI.getSports()
-  const filteredResponse =  response.data.filter(sport => !sport.key.includes("winner"))
-  console.log(filteredResponse)
+  const filteredResponse =  await response.data.filter(sport => !sport.key.includes("winner"))
+  
+  const upsertManySports = filteredResponse.map((sport) =>
+    prisma.sport.upsert({
+      where: { key: sport.key },
+      update: {},
+      create: {
+        key: sport.key,
+        title: sport.title
+      },
+    }),
+  );
+  
+  Promise.all(upsertManySports)
+  
 }
-
-asyncApiCall()
+asyncFetchSports()
