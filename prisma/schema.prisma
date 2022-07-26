@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Coin {
+  id        Int      @id @default(autoincrement())
+  walletId  Int
+  createdAt DateTime @default(now())
+  Wallet    Wallet   @relation(fields: [walletId], references: [id])
+}
+
+model Package {
+  id        Int      @id @default(autoincrement())
+  price     Float    @db.Real
+  createdAt DateTime @default(now())
+  amount    Int
+}
+
+model Rank {
+  id        Int      @id @default(autoincrement())
+  rank      Int      @default(autoincrement())
+  email     String   @unique
+  coins     Int
+  createdAt DateTime @default(now())
+}
+
+model Sport {
+  id    Int    @id @default(autoincrement())
+  key   String @unique
+  title String @unique
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  createdAt    DateTime @default(now())
+  isSubscribed Boolean  @default(false)
+  Wallet       Wallet?
+}
+
+model Wallet {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  userId    Int      @unique
+  User      User     @relation(fields: [userId], references: [id])
+  Coin      Coin[]
+}
