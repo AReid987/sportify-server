@@ -14,6 +14,7 @@ model Coin {
   Wallet    Wallet   @relation(fields: [walletId], references: [id])
 }
 
+
 model Package {
   id        Int      @id @default(autoincrement())
   price     Float    @db.Real
@@ -30,9 +31,25 @@ model Rank {
 }
 
 model Sport {
-  id    Int    @id @default(autoincrement())
-  key   String @unique
-  title String @unique
+  id      Int      @id @default(autoincrement())
+  key     String   @unique
+  title   String   @unique
+  events  Event[]
+}
+
+model Event {
+  id            Int      @id @default(autoincrement())
+  eventID       String   @unique
+  sportKey      String 
+  commenceTime  DateTime
+  homeTeam      String 
+  awayTeam      String 
+  homePrice     Int 
+  homePoint     Float
+  awayPrice     Int
+  awayPoint     Float 
+  sport         Sport @relation(fields: [sportId], references: [id])
+  sportId       Int
 }
 
 model User {
