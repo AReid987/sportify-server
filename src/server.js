@@ -24,11 +24,11 @@ const cronJob = require('node-cron');
 const SportsAPI = require('./sports');
 const EventsAPI = require('./events');
 const prisma = require('../prisma.js');
-const http = require("http");
+const https = require("https");
 
 // keep alive on heroku
 setInterval(function() {
-    http.get("https://fast-fjord-85839.herokuapp.com/");
+    https.get("https://fast-fjord-85839.herokuapp.com/");
 }, 300000); // every 5 minutes (300000)
 
 const asyncFetchSports = async () => {
