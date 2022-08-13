@@ -37,15 +37,15 @@ const asyncFetchSports = async () => {
   // get sports from the odds API
   const response = await SportsAPI.getSports()
   // remove sports that are not in season
-  const result = findManySports.filter(sport1 => !response.data.some(sport2 => sport1.key === sport2.key))
-  const deleteManySports = result.map((sport) => 
-    prisma.sport.delete({
-      where: {
-        key: sport.key,
-      },
-    })
-  )
-  Promise.all(deleteManySports)
+  // const result = findManySports.filter(sport1 => !response.data.some(sport2 => sport1.key === sport2.key))
+  // const deleteManySports = result.map((sport) => 
+  //   prisma.sport.delete({
+  //     where: {
+  //       key: sport.key,
+  //     },
+  //   })
+  // )
+  // Promise.all(deleteManySports)
   
   // remove futures from response data
   const filteredResponse =  await response.data.filter(sport => !sport.key.includes("winner"))
