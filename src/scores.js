@@ -15,7 +15,7 @@ const getScores = async (sport_key) => {
     url: BASE_URL,
     params: {daysFrom: '3'},
     headers: {
-      'X-RapidAPI-Key': '102c88412fmsh95df86356914b45p11ac83jsn4d4f5d98dd2d',
+      'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
       'X-RapidAPI-Host': 'odds.p.rapidapi.com'
     }
   };
